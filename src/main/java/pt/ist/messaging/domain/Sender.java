@@ -30,11 +30,12 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.RoleType;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.groups.PersistentGroup;
+import pt.ist.bennu.core.domain.groups.legacy.PersistentGroup;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.legacy.LegacyUtil;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -78,7 +79,7 @@ public class Sender extends Sender_Base {
     }
 
     public static SortedSet<Sender> getAvailableSenders() {
-        final User user = UserView.getCurrentUser();
+        final User user = Authenticate.getUser();
 
         final SortedSet<Sender> senders = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
         for (final Sender sender : MessagingSystem.getInstance().getSenderSet()) {
@@ -92,11 +93,12 @@ public class Sender extends Sender_Base {
 
     public boolean isMember(final User user) {
         final PersistentGroup persistentGroup = getMembers();
-        return (getMembers() != null && persistentGroup.isMember(user)) || (user != null && user.hasRoleType(RoleType.MANAGER));
+        return (getMembers() != null && persistentGroup.isMember(user))
+                || (user != null && LegacyUtil.hasRoleType(user, RoleType.MANAGER));
     }
 
     public static boolean userHasRecipients() {
-        final User user = UserView.getCurrentUser();
+        final User user = Authenticate.getUser();
         for (final Sender sender : MessagingSystem.getInstance().getSenderSet()) {
             if (sender.getVirtualHost() == VirtualHost.getVirtualHostForThread() && sender.isMember(user)
                     && !sender.getRecipientsSet().isEmpty()) {
@@ -111,7 +113,7 @@ public class Sender extends Sender_Base {
         List<ReplyTo> replyTos = new ArrayList<ReplyTo>();
         for (ReplyTo replyTo : getReplyToSet()) {
             if (replyTo instanceof CurrentUserReplyTo) {
-                final User user = UserView.getCurrentUser();
+                final User user = Authenticate.getUser();
                 final UserReplyTo userReplyTo =
                         user.getUserReplyTo() != null ? user.getUserReplyTo() : UserReplyTo.createFor(user);
                 replyTos.add(userReplyTo);
@@ -146,7 +148,7 @@ public class Sender extends Sender_Base {
     }
 
     @Deprecated
-    public java.util.Set<pt.ist.bennu.core.domain.groups.PersistentGroup> getRecipients() {
+    public java.util.Set<pt.ist.bennu.core.domain.groups.legacy.PersistentGroup> getRecipients() {
         return getRecipientsSet();
     }
 

@@ -27,7 +27,7 @@ package pt.ist.messaging.presentationTier.provider;
 import java.util.Set;
 import java.util.TreeSet;
 
-import pt.ist.bennu.core.domain.groups.PersistentGroup;
+import pt.ist.bennu.core.domain.groups.legacy.PersistentGroup;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.messaging.domain.EmailBean;

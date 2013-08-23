@@ -33,12 +33,12 @@ import java.util.Set;
 
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.groups.PersistentGroup;
-import pt.ist.emailNotifier.domain.Email;
-import pt.ist.emailNotifier.util.EmailAddressList;
+import pt.ist.bennu.core.domain.groups.legacy.PersistentGroup;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.email.domain.Email;
+import pt.ist.bennu.email.util.EmailAddressList;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -90,7 +90,7 @@ public class Message extends Message_Base {
             getBccSet().addAll(bccs);
         }
         setBccString(bccString);
-        setUser(UserView.getCurrentUser());
+        setUser(Authenticate.getUser());
         setCreated(new DateTime());
         setSubject(subject);
         setBody(body);
@@ -356,22 +356,22 @@ public class Message extends Message_Base {
     }
 
     @Deprecated
-    public java.util.Set<pt.ist.bennu.core.domain.groups.PersistentGroup> getCc() {
+    public java.util.Set<pt.ist.bennu.core.domain.groups.legacy.PersistentGroup> getCc() {
         return getCcSet();
     }
 
     @Deprecated
-    public java.util.Set<pt.ist.bennu.core.domain.groups.PersistentGroup> getBcc() {
+    public java.util.Set<pt.ist.bennu.core.domain.groups.legacy.PersistentGroup> getBcc() {
         return getBccSet();
     }
 
     @Deprecated
-    public java.util.Set<pt.ist.bennu.core.domain.groups.PersistentGroup> getTo() {
+    public java.util.Set<pt.ist.bennu.core.domain.groups.legacy.PersistentGroup> getTo() {
         return getToSet();
     }
 
     @Deprecated
-    public java.util.Set<pt.ist.emailNotifier.domain.Email> getEmail() {
+    public java.util.Set<pt.ist.bennu.email.domain.Email> getEmail() {
         return getEmailSet();
     }
 

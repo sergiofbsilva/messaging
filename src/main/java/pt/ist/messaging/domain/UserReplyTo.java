@@ -25,8 +25,8 @@
 package pt.ist.messaging.domain;
 
 import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.exceptions.DomainException;
 import pt.ist.fenixframework.Atomic;
+import pt.ist.messaging.domain.exception.MessagingException;
 
 /**
  * 
@@ -38,7 +38,7 @@ public class UserReplyTo extends UserReplyTo_Base {
     public UserReplyTo(final User user) {
         super();
         if (user.getUserReplyTo() != null) {
-            throw new DomainException("error.person.already.has.reply.to");
+            throw new MessagingException("error.person.already.has.reply.to");
         }
         setUser(user);
     }

@@ -1,8 +1,5 @@
 package pt.ist.messaging.domain;
 
-
-
-
 class MessagingSystem {
 }
 
@@ -31,10 +28,9 @@ class ReplyTo {
 
 	class UserReplyTo extends ReplyTo { }
 
-class MessageTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task { }
+class legacy.SenderGroup extends .pt.ist.bennu.core.domain.groups.legacy.PersistentGroup { }
 
-class SenderGroup extends .pt.ist.bennu.core.domain.groups.PersistentGroup { }
-
+class SenderGroup extends .pt.ist.bennu.core.domain.groups.CustomGroup { }
 
 relation MyOrgMessagingSystem {
 	.pt.ist.bennu.core.domain.MyOrg playsRole myOrg {
@@ -72,7 +68,7 @@ relation SenderPersistentGroupMembers {
 	Sender playsRole senderFromMembers {
 		multiplicity *;
 	}
-	.pt.ist.bennu.core.domain.groups.PersistentGroup playsRole members {
+	.pt.ist.bennu.core.domain.groups.legacy.PersistentGroup playsRole members {
 		multiplicity 1..1;
 	}
 }
@@ -81,7 +77,7 @@ relation SenderPersistentGroupRecipients {
 	Sender playsRole senderFromRecipients {
 		multiplicity *;
 	}
-	.pt.ist.bennu.core.domain.groups.PersistentGroup playsRole recipients {
+	.pt.ist.bennu.core.domain.groups.legacy.PersistentGroup playsRole recipients {
 		multiplicity *;
 	}
 }
@@ -124,7 +120,7 @@ relation MessageRecipientTo {
 	Message playsRole messageFromTos {
 		multiplicity *;
 	}
-	.pt.ist.bennu.core.domain.groups.PersistentGroup playsRole to {
+	.pt.ist.bennu.core.domain.groups.legacy.PersistentGroup playsRole to {
 		multiplicity *;
 	}
 }
@@ -133,7 +129,7 @@ relation MessageRecipientCc {
 	Message playsRole messageFromCc {
 		multiplicity *;
 	}
-	.pt.ist.bennu.core.domain.groups.PersistentGroup playsRole cc {
+	.pt.ist.bennu.core.domain.groups.legacy.PersistentGroup playsRole cc {
 		multiplicity *;
 	}
 }
@@ -142,7 +138,7 @@ relation MessageRecipientBcc {
 	Message playsRole messageFromBcc {
 		multiplicity *;
 	}
-	.pt.ist.bennu.core.domain.groups.PersistentGroup playsRole bcc {
+	.pt.ist.bennu.core.domain.groups.legacy.PersistentGroup playsRole bcc {
 		multiplicity *;
 	}
 }
@@ -157,7 +153,7 @@ relation MessageUser {
 }
 
 relation EmailMessage {
-    .pt.ist.emailNotifier.domain.Email playsRole email {
+    .pt.ist.bennu.email.domain.Email playsRole email {
         multiplicity *;
     }
     Message playsRole message;

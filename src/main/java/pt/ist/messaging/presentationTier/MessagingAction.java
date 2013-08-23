@@ -35,17 +35,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.contents.ActionNode;
-import pt.ist.bennu.core.domain.contents.Node;
 import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
+import pt.ist.bennu.portal.Application;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.servlets.functionalities.CreateNodeAction;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.messaging.domain.EmailBean;
 import pt.ist.messaging.domain.Message;
 import pt.ist.messaging.domain.Sender;
-import pt.ist.messaging.domain.SenderGroup;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/messagingAction")
@@ -54,18 +50,25 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  * @author Luis Cruz
  * 
  */
+@Application(bundle = "resources/MessagingResources", title = "label.module.messaging", group = "#sender",
+        description = "label.module.messaging", path = "listSenders")
 public class MessagingAction extends ContextBaseAction {
 
-    @CreateNodeAction(bundle = "MESSAGING_RESOURCES", key = "add.node.messaging.interface", groupKey = "label.module.messaging")
-    public ActionForward createExpenditureNodes(final ActionMapping mapping, final ActionForm form,
-            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
-        final VirtualHost virtualHost = getDomainObject(request, "virtualHostToManageId");
-        final Node node = getDomainObject(request, "parentOfNodesToManageId");
+//    @CreateNodeAction(bundle = "MESSAGING_RESOURCES", key = "add.node.messaging.interface", groupKey = "label.module.messaging")
+//    public ActionForward createExpenditureNodes(final ActionMapping mapping, final ActionForm form,
+//            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+//        final VirtualHost virtualHost = getDomainObject(request, "virtualHostToManageId");
+//        final Node node = getDomainObject(request, "parentOfNodesToManageId");
+//
+//        ActionNode.createActionNode(virtualHost, node, "/messagingAction", "listSenders", "resources.MessagingResources",
+//                "label.module.messaging", SenderGroup.getInstance());
+//
+//        return forwardToMuneConfiguration(request, virtualHost, node);
+//    }
 
-        ActionNode.createActionNode(virtualHost, node, "/messagingAction", "listSenders", "resources.MessagingResources",
-                "label.module.messaging", SenderGroup.getInstance());
-
-        return forwardToMuneConfiguration(request, virtualHost, node);
+    public ActionForward app(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {
+        return listSenders(mapping, form, request, response);
     }
 
     public ActionForward listSenders(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,

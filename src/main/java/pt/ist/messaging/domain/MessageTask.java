@@ -27,20 +27,17 @@ package pt.ist.messaging.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.bennu.scheduler.CronTask;
 
 /**
  * 
  * @author Luis Cruz
  * 
  */
-public class MessageTask extends MessageTask_Base {
+public class MessageTask extends CronTask {
 
-    @Atomic
     @Override
     public void runTask() {
-        Language.setLocale(Language.getDefaultLocale());
         final MessagingSystem messagingSystem = MessagingSystem.getInstance();
         final Set<Sender> senders = new HashSet<Sender>();
         for (final Message message : messagingSystem.getMessagePendingDispatchSet()) {
